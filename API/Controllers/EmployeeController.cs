@@ -1,4 +1,5 @@
-﻿using DALByEFCore.Models;
+﻿using BL_API;
+using DTO;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,14 +10,17 @@ namespace API.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
+        readonly IEmployeeBL _employeeBL;
+        public EmployeeController(IEmployeeBL employeeBL)
+        {
+                _employeeBL =  employeeBL;
+        }
+
         // GET: api/<EmployeeController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable< EmployeeDTO > Get()
         {
-           //BLL.EmployeeBL bl = new BLL.EmployeeBL();
-           //List<Employee> employees=  bl.GetAll(condition);
-           // return employees;
-           throw new NotImplementedException();
+           return  _employeeBL.GetEmployees();
         }
 
         // GET api/<EmployeeController>/5
@@ -28,8 +32,9 @@ namespace API.Controllers
 
         // POST api/<EmployeeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] EmployeeDTO newEmp)
         {
+            _employeeBL.AddNewEmployee(newEmp );
         }
 
         // PUT api/<EmployeeController>/5

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using EntitiesAPI;
+using System;
 using System.Collections.Generic;
 
 namespace DALByEFCore.Models;
 
-public partial class Employee
+public partial class Employee : IEmployee 
 {
     public int Empid { get; set; }
 

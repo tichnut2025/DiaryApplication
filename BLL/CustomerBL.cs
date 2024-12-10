@@ -27,6 +27,7 @@ namespace BLL
                       // .ForMember(x => x.CustCity, s => s.MapFrom(p =>  p.CustCity.ToString() ))
                        );
         }
+       
         public List<CustomerDTO> GetCustomers(string name="")
         {
             //CustomerDal dal = new();
