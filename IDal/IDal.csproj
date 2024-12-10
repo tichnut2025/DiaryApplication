@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DALByEFCore\DALByEFCore.csproj" />
+    <ProjectReference Include="..\EntitiesAPI\EntitiesAPI.csproj" />
   </ItemGroup>
 
 </Project>

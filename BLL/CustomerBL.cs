@@ -1,7 +1,8 @@
 ﻿using BL_API;
-using DALByEFCore;
-using DALByEFCore.Models;
+
 using DTO;
+using EntitiesAPI;
+using IDal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace BLL
         {
             _customerDal = customerDal;
               configCustomerConverter = new AutoMapper.MapperConfiguration(a =>
-                       a.CreateMap<Customer, CustomerDTO>()
+                       a.CreateMap<ICustomer, CustomerDTO>()
                        .ForMember(x => x.CustomerId,s=>s.MapFrom(p=>p.CustId))
                       // .ForMember(x => x.CustCity, s => s.MapFrom(p =>int.Parse( p.CustCity) ))
                        .ReverseMap()
@@ -44,7 +45,7 @@ namespace BLL
             return convertedList    ;
         }
 
-        private CustomerDTO  convertCustomer(Customer source)
+        private CustomerDTO  convertCustomer(ICustomer source)
         {
             //הגדרות ההמרה : מאיזו מחלקה לאיזו מחלקה. וגם הפוך
             
@@ -56,13 +57,13 @@ namespace BLL
 
         }
 
-        private Customer  convertCustomer(CustomerDTO source)
+        private ICustomer  convertCustomer(CustomerDTO source)
         {
             //הגדרות ההמרה : מאיזו מחלקה לאיזו מחלקה. וגם הפוך
 
             AutoMapper.Mapper mapper = new(configCustomerConverter);
 
-            Customer  customer = mapper.Map<Customer >(source);
+            ICustomer  customer = mapper.Map<ICustomer >(source);
 
             return customer;
 

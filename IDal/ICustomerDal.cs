@@ -1,9 +1,9 @@
-﻿using DALByEFCore.Models;
+﻿
+
 using EntitiesAPI;
 
 namespace IDal
 {
-    
 
     public interface  ICustomerDal
     {

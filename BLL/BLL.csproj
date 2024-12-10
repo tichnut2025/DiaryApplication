@@ -12,8 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BL_API\BL_API.csproj" />
-    <ProjectReference Include="..\DALByEFCore\DALByEFCore.csproj" />
     <ProjectReference Include="..\DTO\DTO.csproj" />
+    <ProjectReference Include="..\IDal\IDal.csproj" />
   </ItemGroup>
 
 </Project>

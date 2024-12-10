@@ -1,5 +1,5 @@
-﻿using DALByEFCore.Models;
-using DTO;
+﻿using DTO;
+using EntitiesAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public  class Converter
+    public  class Converter 
     {
-        public static Customer Convert (CustomerDTO dto)
-        {
-            var c= new Customer();
-            c.CustCity = dto.CustCity.ToString();
-            c.CustAddress=dto.CustAddress;
+        //public static ICustomer Convert (CustomerDTO dto)
+        //{
+        //    ICustomer  c  = new Customer();
+        //    c.CustCity = dto.CustCity.ToString();
+        //    c.CustAddress=dto.CustAddress;
 
-            //................
-            //can use reflection
-            return c;
+        //    //................
+        //    //can use reflection
+        //    return c;
 
-        }
+        //}
 
         public static void CopyMatchingFields(object source, object target)
         {

@@ -1,6 +1,7 @@
 using BL_API;
 using BLL;
 using DALByEFCore;
+using IDal;
 namespace API
 {
     public class Program
