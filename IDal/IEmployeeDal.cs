@@ -1,10 +1,11 @@
-﻿using EntitiesAPI;
+﻿
+using DBEntities.Models;
 
 namespace IDal
 {
     public interface IEmployeeDal
     {
-        void AddNewEmployee(EmployeeEntityApi employee);
-        List< EmployeeEntityApi > GetEmployees();
+        void AddNewEmployee(Employee employee);
+        List< Employee > GetEmployees();
     }
 }

@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
 using BL_API;
-using DALByEFCore.Models;
+using DBEntities.Models;
 using DTO;
-using EntitiesAPI;
 using IDal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL
 {
@@ -33,7 +27,7 @@ namespace BLL
         public void AddNewEmployee(EmployeeDTO newEmployee)
         {
             AutoMapper.Mapper  mapper = new Mapper(configEmployeeConverter);
-            EmployeeEntityApi  employeeEntityApi = mapper.Map<EmployeeEntityApi>(newEmployee);
+            Employee  employeeEntityApi = mapper.Map<Employee>(newEmployee);
            
             _employeeDal.AddNewEmployee(employeeEntityApi);
         }

@@ -1,13 +1,12 @@
 ﻿
-
-using EntitiesAPI;
+using DBEntities.Models;
 
 namespace IDal
 {
 
     public interface  ICustomerDal
     {
-        public List<ICustomer> GetAllCustomers(string? name = "");
+        public List<Customer> GetAllCustomers(string? name = "");
 
     }
 }

@@ -1,37 +1,27 @@
-﻿using BL_API;
-using DALByEFCore.Models;
-using EntitiesAPI;
+﻿using DBEntities;
+using DBEntities.Models;
 using IDal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DALByEFCore;
-//public interface ICustomerDal:IGenDal<ICustomer>
-//{
-//    public List<Customer> GetAllCustomers(string? name = "");
 
-//}
 public class CustomerDal :    ICustomerDal
 {
-    public List<ICustomer> GetAll()
+    public List<Customer> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public List<ICustomer> GetAllCustomers(string? name = "")
+    public List<Customer> GetAllCustomers(string? name = "")
     {
         try
         {
-            using  EmployeesContext context = new EmployeesContext()  ;
+            using DiaryContext context = new DiaryContext()  ;
             if (string.IsNullOrEmpty(name))
               //  return context.Customers.ToList();
-               return context.Customers.Select(c => (ICustomer)c).ToList();
+               return context.Customers.Select(c => (Customer)c).ToList();
 
             else
-                return context.Customers.Where(a => a.CustName.Contains(name)).Select(c => (ICustomer)c).ToList();
+                return context.Customers.Where(a => a.CustName.Contains(name)).Select(c => (Customer)c).ToList();
 
         }
         catch (Exception)
@@ -42,7 +32,7 @@ public class CustomerDal :    ICustomerDal
          
     }
 
-    List<ICustomer> ICustomerDal.GetAllCustomers(string? name)
+    List<Customer> ICustomerDal.GetAllCustomers(string? name)
     {
         throw new NotImplementedException();
     }

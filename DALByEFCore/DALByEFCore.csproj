@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BL_API\BL_API.csproj" />
-    <ProjectReference Include="..\EntitiesAPI\EntitiesAPI.csproj" />
+    <ProjectReference Include="..\DBEntities\DBEntities.csproj" />
     <ProjectReference Include="..\IDal\IDal.csproj" />
   </ItemGroup>
 
