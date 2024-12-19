@@ -4,7 +4,7 @@ namespace IDal
 {
     public interface IEmployeeDal
     {
-        void AddNewEmployee(IEmployee employee);
-        List< IEmployee > GetEmployees();
+        void AddNewEmployee(EmployeeEntityApi employee);
+        List< EmployeeEntityApi > GetEmployees();
     }
 }

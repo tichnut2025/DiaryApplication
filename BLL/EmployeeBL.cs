@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BL_API;
+using DALByEFCore.Models;
 using DTO;
 using EntitiesAPI;
 using IDal;
@@ -12,18 +13,18 @@ using System.Threading.Tasks;
 namespace BLL
 {
 
-    internal class EmployeeBL : IEmployeeBL
+    public  class EmployeeBL : IEmployeeBL
     {
         readonly IEmployeeDal _employeeDal;
-
+ 
         MapperConfiguration configEmployeeConverter;
-        public EmployeeBL(IEmployeeDal employeeDal)
+        public EmployeeBL(IEmployeeDal employeeDal )
         {
             _employeeDal= employeeDal;
-
+           
 
             configEmployeeConverter = new MapperConfiguration(a =>
-                     a.CreateMap<IEmployee, EmployeeDTO>()
+                     a.CreateMap<Employee, EmployeeDTO>()
                      .ForMember(x => x.FullName, s => s.MapFrom(p => $"{ p.FirstName} {p.LastName  }"))
                       .ReverseMap()
                       );
@@ -32,9 +33,9 @@ namespace BLL
         public void AddNewEmployee(EmployeeDTO newEmployee)
         {
             AutoMapper.Mapper  mapper = new Mapper(configEmployeeConverter);
-            IEmployee emp = mapper.Map<IEmployee>(newEmployee);
+            EmployeeEntityApi  employeeEntityApi = mapper.Map<EmployeeEntityApi>(newEmployee);
            
-            _employeeDal.AddNewEmployee(  emp);
+            _employeeDal.AddNewEmployee(employeeEntityApi);
         }
 
 

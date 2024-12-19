@@ -1,6 +1,8 @@
 using BL_API;
 using BLL;
 using DALByEFCore;
+using DALByEFCore.Models;
+using EntitiesAPI;
 using IDal;
 namespace API
 {
@@ -19,6 +21,9 @@ namespace API
 
             builder.Services.AddScoped<ICustomerBL, CustomerBL>();
             builder.Services.AddScoped<ICustomerDal, CustomerDal>();
+            builder.Services.AddScoped<IEmployeeBL, EmployeeBL>();
+            builder.Services.AddScoped<IEmployeeDal, EmployeeDal>();
+            builder.Services.AddScoped<EmployeeEntityApi, Employee>();
 
             var app = builder.Build();
 

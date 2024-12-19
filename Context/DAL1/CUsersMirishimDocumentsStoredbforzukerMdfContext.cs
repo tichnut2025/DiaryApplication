@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using DBEntities.Models1;
 using Microsoft.EntityFrameworkCore;
 
-namespace DALByEFCore.Models;
+namespace DBEntities;
 
-public partial class EmployeesContext : DbContext
+public partial class CUsersMirishimDocumentsStoredbforzukerMdfContext : DbContext
 {
-    public EmployeesContext()
+    public CUsersMirishimDocumentsStoredbforzukerMdfContext()
     {
     }
 
-    public EmployeesContext(DbContextOptions<EmployeesContext> options)
+    public CUsersMirishimDocumentsStoredbforzukerMdfContext(DbContextOptions<CUsersMirishimDocumentsStoredbforzukerMdfContext> options)
         : base(options)
     {
     }
@@ -27,14 +28,15 @@ public partial class EmployeesContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        //=> optionsBuilder.UseSqlServer("Data Source=A301-TEACER;Initial Catalog=Employees;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
         => optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\MiriShim\\Documents\\StoreDBForZuker.mdf;Integrated Security=True;Connect Timeout=30");
- 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.HasKey(e => e.CustId).HasName("PK_Customer_tbl");
+
+            entity.HasIndex(e => e.EmpId, "IX_Customers_EmpID");
 
             entity.Property(e => e.CustId).HasColumnName("CustID");
             entity.Property(e => e.CustAddress)
@@ -112,6 +114,10 @@ public partial class EmployeesContext : DbContext
             entity.HasKey(e => e.Ordnum);
 
             entity.ToTable("Orders_tbl");
+
+            entity.HasIndex(e => e.CustId, "IX_Orders_tbl_CustID");
+
+            entity.HasIndex(e => e.ProdId, "IX_Orders_tbl_ProdID");
 
             entity.Property(e => e.CustId).HasColumnName("CustID");
             entity.Property(e => e.Orddate).HasColumnName("orddate");

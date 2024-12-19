@@ -11,19 +11,30 @@ namespace DALByEFCore
 {
     public  class EmployeeDal : IEmployeeDal
     {
-        public void AddNewEmployee(IEmployee employee)
+        public void AddNewEmployee(Employee employee)
         {
             using  Models.EmployeesContext ctx = new()  ;
-            ctx.Employees.Add((Employee )employee);    
+            Employee emp = (Employee)employee;
+             ctx.Employees.Add(employee as Employee );    
             ctx.SaveChanges();  
         }
 
-        public List<IEmployee> GetEmployees()
+        public void AddNewEmployee(EmployeeEntityApi employee)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Employee > GetEmployees()
         {
             using Models.EmployeesContext ctx = new();
 
-            return ctx.Employees .Select(item => (IEmployee)item).ToList();
+            return ctx.Employees .Select(item => (Employee )item).ToList();
             
+        }
+
+        List<EmployeeEntityApi> IEmployeeDal.GetEmployees()
+        {
+            throw new NotImplementedException();
         }
     }
 }
