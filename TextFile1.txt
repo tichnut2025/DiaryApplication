@@ -1,0 +1,41 @@
+3. יצירת פרויקט Infrastructure ביניים (אופציה אופטימלית):
+אם אתה עובד עם ארכיטקטורת Clean Architecture או Onion Architecture, אני ממליץ לשקול להקים פרויקט נוסף בשם Infrastructure או Common, שמכיל את כל הקונפיגורציות של DI. בפרויקט הזה יהיו רק תלותים כלליות וסטטיות כמו קונפיגורציות DI.
+
+יתרונות:
+
+ה-API יוכל להתמקד בהגדרת הקונטרולרים וה-Endpoints, בלי לדעת יותר מדי על לוגיקת העסקים או הגישה לנתונים.
+ה-BL יוכל להתמקד בלוגיקת העסקים בלי להיות תלוי בקונפיגורציות של ה-API או ה-DAL.
+ה-DAL לא יכיר את ה-API או ה-BL, אך Infrastructure ישמש כ"שכבת גישור" שמכילה את כל הגדרות ה-DI.
+דוגמה להקמת Infrastructure:
+
+csharp
+Copy code
+// Infrastructure/ServiceCollectionExtensions.cs
+namespace YourProject.Infrastructure
+{
+    public static class ServiceCollectionExtensions
+    {
+        public static void AddInfrastructure(this IServiceCollection services)
+        {
+            // הוסף שירותים כגון CustomerBL
+            services.AddScoped<ICustomerBL, CustomerBL>();
+            // הוסף שירותים נוספים, כמו גישה לדטאבייס, שירותי Cache, וכו'
+        }
+    }
+}
+ב-API:
+
+csharp
+Copy code
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddInfrastructure();  // קריאה לפונקציה מה-Infra
+        // שאר הקונפיגורציה של ה-API
+    }
+}
+סיכום
+אם ה-API צריך רק להשתמש ב-BL ואין לו צורך ישיר ב-DAL, עדיף לשים את הפונקציה בפרויקט ה-BL, ובכך להימנע מתלות ישירה ב-DAL.
+אם אתה רוצה לשמור על ארכיטקטורה מסודרת (למשל ב-Clean Architecture), כדאי להקים פרויקט נפרד (למשל Infrastructure) שיכיל את הגדרת ה-DI.
+בכל מקרה, המטרה היא להימנע מתלות ישירה בין השכבות ולהשאיר את כל הקונפיגורציה וה-Dependency Injection במקום שנמצא "בין" השכבות, ולא בתוך אחת השכבות עצמה.
