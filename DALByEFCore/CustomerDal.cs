@@ -4,11 +4,11 @@ using IDal;
 
 namespace DALByEFCore;
 
-public class CustomerDal :    ICustomerDal
+public class CustomerDal : ICustomerDal
 {
     public List<Customer> GetAll()
     {
-        throw new NotImplementedException();
+        return GetAllCustomers();
     }
 
     public List<Customer> GetAllCustomers(string? name = "")
@@ -32,8 +32,5 @@ public class CustomerDal :    ICustomerDal
          
     }
 
-    List<Customer> ICustomerDal.GetAllCustomers(string? name)
-    {
-        throw new NotImplementedException();
-    }
+     
 }

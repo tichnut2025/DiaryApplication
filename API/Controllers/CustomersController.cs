@@ -39,8 +39,9 @@ namespace API.Controllers
 
         // POST api/<CustomersController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult  Post([FromBody] string value)
         {
+            return Ok(true);
         }
 
         // PUT api/<CustomersController>/5

@@ -3,6 +3,7 @@ using BLL;
 using DALByEFCore;
 using DALByEFCore.Models;
 using IDal;
+using Infrastructure;
 
 namespace API;
 
@@ -19,12 +20,9 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.AddScoped<ICustomerBL, CustomerBL>();
-        builder.Services.AddScoped<ICustomerDal, CustomerDal>();
-        builder.Services.AddScoped<IEmployeeBL, EmployeeBL>();
-        builder.Services.AddScoped<IEmployeeDal, EmployeeDal>();
-        builder.Services.AddScoped<Employee, Employee>();
-
+        builder.Services.AddAllDependencies();   
+         
+ 
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
