@@ -4,6 +4,7 @@ using BLL;
 using DALByEFCore;
 using DALByEFCore.Models;
 using IDal;
+using Infrastructure;
 using System.Globalization;
 
 namespace API;
@@ -21,13 +22,10 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.AddScoped<ICustomerBL, CustomerBL>();
-        builder.Services.AddScoped<ICustomerDal, CustomerDal>();
-        builder.Services.AddScoped<IEmployeeBL, EmployeeBL>();
-        builder.Services.AddScoped<IEmployeeDal, EmployeeDal>();
-
-        //todo :: move dependencies to another project
-        WebApplication app = builder.Build();
+        builder.Services.AddAllDependencies();   
+         
+ 
+        var app = builder.Build();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
