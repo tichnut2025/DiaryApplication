@@ -1,8 +1,10 @@
+using Azure;
 using BL_API;
 using BLL;
 using DALByEFCore;
 using DALByEFCore.Models;
 using IDal;
+using System.Globalization;
 
 namespace API;
 
@@ -10,7 +12,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
 
@@ -23,9 +25,9 @@ public class Program
         builder.Services.AddScoped<ICustomerDal, CustomerDal>();
         builder.Services.AddScoped<IEmployeeBL, EmployeeBL>();
         builder.Services.AddScoped<IEmployeeDal, EmployeeDal>();
-        builder.Services.AddScoped<Employee, Employee>();
 
-        var app = builder.Build();
+        //todo :: move dependencies to another project
+        WebApplication app = builder.Build();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -38,9 +40,46 @@ public class Program
 
         app.UseAuthorization();
 
+         app.Use(ShabatMiddlware);
+
+        app.Use(async (context, next) =>
+        {
+            // אם היום יום שלישי, נחסום את הבקשה
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Friday)
+            {
+                context.Response.StatusCode = 403; // Forbidden
+                await context.Response.WriteAsync("access in friday is denied    .");
+            }
+            else
+            {
+                // אם לא יום שלישי, נמשיך את הבקשה הלאה
+                await next();
+            }
+        });
+
+        app.UseMiddleware<CultureMiddleware>(); 
 
         app.MapControllers();
 
+
         app.Run();
+    }
+
+    private static RequestDelegate ShabatMiddlware(RequestDelegate @delegate)
+    {
+        return async (context) =>
+        {
+            // אם היום יום שלישי, נחסום את הבקשה
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday)
+            {
+                context.Response.StatusCode = 403; // Forbidden
+                await context.Response.WriteAsync("הגישה אסורה ביום שלישי.");
+            }
+            else
+            {
+                // אם לא יום שלישי, נמשיך להעביר את הבקשה הלאה
+                await @delegate(context);
+            }
+        };
     }
 }

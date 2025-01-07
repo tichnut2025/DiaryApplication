@@ -2,6 +2,8 @@
 using DBEntities.Models;
 using DTO;
 using IDal;
+using System.Net.Mail;
+using System.Net;
 
 namespace BLL;
 
@@ -64,4 +66,56 @@ public  class CustomerBL :  ICustomerBL
 
     }
 
+    async void doAsin()
+    {
+       int numOfOKMails= await sendMailToAllCustomers();
+    }
+
+    private async Task<int> sendMailToAllCustomers()
+    {
+        await SendEmailAsync("", "", "");
+         
+        return 0; 
+
+    }
+
+    public static async Task<int> SendEmailAsync(string toAddress, string subject, string body)
+    {
+        try
+        {
+            // הגדרת פרטי השרת SMTP
+            var smtpClient = new SmtpClient("smtp.example.com")  // כתובת השרת של SMTP
+            {
+                Port = 587,  // מספר הפורט (לרוב 587 או 465)
+                Credentials = new NetworkCredential("your-email@example.com", "your-password"),  // פרטי התחברות
+                EnableSsl = true  // להשתמש בהצפנה
+            };
+
+            // יצירת ההודעה
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress("your-email@example.com"),  // כתובת השולח
+                Subject = subject,  // נושא המייל
+                Body = body,  // תוכן המייל
+                IsBodyHtml = false  // אם התוכן ב-HTML (אם יש לך תגי HTML במייל, תעשה את זה true)
+            };
+
+            // הוספת כתובת הנמען
+            mailMessage.To.Add(toAddress);
+
+            // שליחת המייל
+           //await  smtpClient.Send  (mailMessage );
+            await smtpClient.SendMailAsync(mailMessage);
+
+
+            Console.WriteLine("ההודעה נשלחה בהצלחה!");
+
+            return 0;   
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"שגיאה בשליחת המייל: {ex.Message}");
+            return -1;
+        }
+    }
 }
