@@ -4,15 +4,19 @@ using DTO;
 using IDal;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.Extensions.Logging;
 
 namespace BLL;
 
 public  class CustomerBL :  ICustomerBL
 {
+    private readonly ILogger<CustomerBL >  _logger;
+
     private readonly ICustomerDal  _customerDal;
     AutoMapper.MapperConfiguration configCustomerConverter;
-    public CustomerBL(ICustomerDal customerDal)
+    public CustomerBL(ICustomerDal customerDal , ILogger<CustomerBL> logger)
     {
+        _logger = logger;
         _customerDal = customerDal;
           configCustomerConverter = new AutoMapper.MapperConfiguration(a =>
                    a.CreateMap<Customer, CustomerDTO>()
@@ -26,6 +30,7 @@ public  class CustomerBL :  ICustomerBL
    
     public List<CustomerDTO> GetCustomers(string name="")
     {
+        _logger.LogError($"ארעה שגיא קריטית בפונקציה {nameof (GetCustomers )}");
         //CustomerDal dal = new();
         //return dal.GetAllCustomers();
 

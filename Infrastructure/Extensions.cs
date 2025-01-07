@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Infrastructure
 {
-    public static  class Extensions
+    public static class Extensions
     {
         public static  void AddAllDependencies(this IServiceCollection service)
         {
@@ -15,7 +15,12 @@ namespace Infrastructure
             service.AddScoped<ICustomerDal, CustomerDal>();
             service.AddScoped<IEmployeeBL, EmployeeBL>();  
             service.AddScoped<IEmployeeDal, EmployeeDal>();
-            
+             
+        }
+
+        public static  int Gimatria(this string txt)
+        {
+            return 99;
         }
     }
 }

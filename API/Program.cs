@@ -5,7 +5,9 @@ using DALByEFCore;
 using DALByEFCore.Models;
 using IDal;
 using Infrastructure;
+using Microsoft.Identity.Client;
 using System.Globalization;
+using System.Reflection;
 
 namespace API;
 
@@ -15,6 +17,16 @@ public class Program
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+        builder.Logging.ClearProviders();
+        builder.Logging.AddConsole();
+        builder.Logging.AddDebug();
+        if (Environment.OSVersion.VersionString  !="win11")
+            builder.Logging.AddEventLog();
+        //builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command",
+         //   Microsoft.Extensions.Logging.LogLevel.Information);
+
+        
+
         // Add services to the container.
 
         builder.Services.AddControllers();
@@ -22,9 +34,11 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.AddAllDependencies();   
-         
- 
+        builder.Services.AddAllDependencies();
+        builder.Services.AddLogging();
+
+        //AddDynamicDependencies(builder.Services);
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -55,12 +69,25 @@ public class Program
             }
         });
 
+         
         app.UseMiddleware<CultureMiddleware>(); 
 
         app.MapControllers();
 
 
         app.Run();
+    }
+
+    private static void AddDynamicDependencies(IServiceCollection services)
+    {
+        //reflection::
+        Assembly assemb1 = Assembly.LoadFile("BLL.dll");
+        Assembly assemb2 = Assembly.LoadFile("IBL.dll");
+        Type typeOfUserBL= assemb1.GetType("UserBL");
+        Type typeOfIUserBL = assemb2.GetType("IUserBL");
+
+        services.AddScoped(typeOfUserBL, typeOfIUserBL);
+         
     }
 
     private static RequestDelegate ShabatMiddlware(RequestDelegate @delegate)
