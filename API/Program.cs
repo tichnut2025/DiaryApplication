@@ -20,8 +20,9 @@ public class Program
         builder.Logging.ClearProviders();
         builder.Logging.AddConsole();
         builder.Logging.AddDebug();
-        if (Environment.OSVersion.VersionString  !="win11")
-            builder.Logging.AddEventLog();
+       // if (Environment.OSVersion.VersionString  !="win11")
+       //     builder.Logging.AddEventLog();
+      
         //builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command",
          //   Microsoft.Extensions.Logging.LogLevel.Information);
 
