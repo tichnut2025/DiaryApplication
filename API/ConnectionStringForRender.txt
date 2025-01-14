@@ -1,0 +1,13 @@
+﻿password:   QEnWKloikdZcmYqjobvx2rb0uXuxwhM4
+internal db url : postgresql://dairyappdb_yl06_user:QEnWKloikdZcmYqjobvx2rb0uXuxwhM4@dpg-cu36gad2ng1s73c70ek0-a/dairyappdb_yl06
+external db url:  postgresql://dairyappdb_yl06_user:QEnWKloikdZcmYqjobvx2rb0uXuxwhM4@dpg-cu36gad2ng1s73c70ek0-a.frankfurt-postgres.render.com/dairyappdb_yl06
+
+command:  PGPASSWORD=QEnWKloikdZcmYqjobvx2rb0uXuxwhM4 psql -h dpg-cu36gad2ng1s73c70ek0-a.frankfurt-postgres.render.com -U dairyappdb_yl06_user dairyappdb_yl06
+
+username: dairyappdb_yl06_user	
+
+db name:  dairyappdb_yl06
+
+port: 5432
+
+"Server=postgresql://dairyappdb_yl06_user:QEnWKloikdZcmYqjobvx2rb0uXuxwhM4@dpg-cu36gad2ng1s73c70ek0-a.frankfurt-postgres.render.com/dairyappdb_yl06;Database=dairyappdb_yl06;User id=dairyappdb_yl06_user;Password=QEnWKloikdZcmYqjobvx2rb0uXuxwhM4;Port=5432"
